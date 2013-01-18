@@ -10,7 +10,7 @@ public class Main {
 		ASD
 		
 		
-		
+		//moi
 		
 		Simulator s = new Simulator(5, 5);
 		
