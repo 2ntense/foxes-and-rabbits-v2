@@ -9,6 +9,9 @@ public class Main {
 		// TODO Auto-generated method stub
 		ASD
 		
+		
+		
+		
 		Simulator s = new Simulator(5, 5);
 		
 	}
