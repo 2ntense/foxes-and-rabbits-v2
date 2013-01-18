@@ -9,6 +9,11 @@ public class Main {
 		// TODO Auto-generated method stub
 		test
 		moi
+		
+		hjhjhj
+		
+		
+		
 		Simulator s = new Simulator(5, 5);
 	}
 
