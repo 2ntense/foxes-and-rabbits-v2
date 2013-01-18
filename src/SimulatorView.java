@@ -93,7 +93,7 @@ public class SimulatorView extends JFrame
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub								
 				
-				sim.runLongSimulation();
+				sim.simulate(1);
 			}
 		});
         
