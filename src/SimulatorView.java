@@ -15,7 +15,7 @@ import java.util.Map;
  * @author David J. Barnes and Michael Kölling
  * @version 2011.07.31
  */
-public class SimulatorView extends JFrame
+public class SimulatorView extends JFrame implements ActionListener
 {
     // Colors used for empty locations.
     private static final Color EMPTY_COLOR = Color.white;
@@ -34,9 +34,9 @@ public class SimulatorView extends JFrame
     private FieldStats stats;
 
     //* Buttons
-    private JButton step1, step100;
+    private JButton bStep1, bStep100;
     
-    private Simulator sim;
+    //private Simulator simulator;
     
     /**
      * Create a view of the given width and height.
@@ -44,7 +44,7 @@ public class SimulatorView extends JFrame
      * @param width  The simulation's width.
      */
     public SimulatorView(int height, int width)
-    {
+    {    	
         stats = new FieldStats();
         colors = new LinkedHashMap<Class, Color>();
 
@@ -54,8 +54,8 @@ public class SimulatorView extends JFrame
         
         setLocation(100, 50);
         
-        fieldView = new FieldView(height, width);
-
+        fieldView = new FieldView(height, width);        
+        
         Container contents = getContentPane();
         contents.add(stepLabel, BorderLayout.NORTH);
         contents.add(fieldView, BorderLayout.CENTER);
@@ -63,58 +63,40 @@ public class SimulatorView extends JFrame
         pack();
         setVisible(true);
         
-        //*Step 1 button
-        /*
-        step1 = new JButton("Step 1");
-        step1.addActionListener(this);
-        this.setLayout(null);
-        add(step1);
-        step1.setBounds(10, 10, 120, 30);
-        setVisible(true);
-        
-        //*Step 100 button
-        step100 = new JButton("Step 100");
-        //step1.addActionListener(this);
-        this.setLayout(null);
-        add(step100);
-        step100.setBounds(10, 50, 120, 30);
-        setVisible(true);
-        */      
-        
-        
+        //Maak nieuwe Panel aan
         JPanel buttonPanel = new JPanel();
         
+        //Maak nieuwe Buttons aan
         JButton bStep1 = new JButton("Step 1");
         JButton bStep100 = new JButton("Step 100");
         
-        bStep1.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub								
-				
-				sim.simulate(1);
-			}
-		});
-        
+        //Voeg ActionListeners toe
+        bStep1.addActionListener(this);
+        bStep100.addActionListener(this);
                
-        
+        //Voeg Buttons toe aan Panel
         buttonPanel.add(bStep1);
         buttonPanel.add(bStep100);
         
-        add(buttonPanel, BorderLayout.EAST);
+        //Voeg Panel toe aan window
+        add(buttonPanel, BorderLayout.WEST);
         
-        
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
-    
-    
-    
-    public void actionPerformed(ActionEvent event) {
-    	Object cause = event.getSource();
+    /**
+     * Kijkt welke Button gedrukt is.
+     */
+    public void actionPerformed(ActionEvent e) {
+    	if (e.getActionCommand().equals("Step 1")) {
+    		System.out.println("Step 1 pressed"); 
+    		Main.getSimulator().simulate(1);
+        }
+    	else if(e.getActionCommand().equals("Step 100")) {
+        	System.out.println("Step 100 pressed");
+        	Main.getSimulator().simulate(100);
+        }
     }
-    
-    
     
     
     

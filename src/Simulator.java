@@ -149,4 +149,9 @@ public class Simulator
             }
         }
     }
+    
+    public void test() {
+    	System.out.println("Hello");
+    }
+    
 }
