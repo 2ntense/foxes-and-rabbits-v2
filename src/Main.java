@@ -9,6 +9,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		
 		//AFWDFDAWFD
+		//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 		
 		Simulator s = new Simulator(5, 5);
 		
