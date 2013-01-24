@@ -2,6 +2,8 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.Random;
 
+//test
+
 /**
  * A simple model of a bear.
  * Bears age, move, eat foxes, rabbits, and die. 
