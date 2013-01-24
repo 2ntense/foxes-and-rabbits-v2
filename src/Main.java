@@ -6,9 +6,12 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub							
-		setSimulator(new Simulator());
+			
+		setSimulator(new Simulator(100, 100));
+		
 		System.out.println("Simulator gestart");
 	}
+	
 	
 	public static Simulator getSimulator() {
 		return simulator;
@@ -17,5 +20,4 @@ public class Main {
 	public static void setSimulator(Simulator simulator) {
 		Main.simulator = simulator;
 	}
-	
 }
