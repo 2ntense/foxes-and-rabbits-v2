@@ -11,6 +11,7 @@ import java.util.Random;
 public class Bear extends Animal
 {
 	//SADASDSADSAD
+	//AAAAAAAAAAAAAAAAAAAAA
     // Characteristics shared by all foxes (class variables).
     
     // The age at which a bear can start to breed.
