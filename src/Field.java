@@ -79,6 +79,8 @@ public class Field
         field[location.getRow()][location.getCol()] = animal;
     }
     
+   
+    
     /**
      * Return the animal at the given location, if any.
      * @param location Where in the field.

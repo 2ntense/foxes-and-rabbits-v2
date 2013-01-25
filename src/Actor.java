@@ -1,4 +1,7 @@
+import java.util.List;
 
-public class Actor {
-	
+public interface Actor
+{
+	public void act(List<Actor> newHunters);
+	void setLocation(Location newLocation);
 }

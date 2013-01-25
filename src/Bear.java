@@ -19,7 +19,7 @@ public class Bear extends Animal
     // The age to which a bear can live.
     private static final int MAX_AGE = 200;
     // The likelihood of a bear breeding.
-    private static final double BREEDING_PROBABILITY = 0.06;
+    private static final double BREEDING_PROBABILITY = 0.08;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 2;
     // The food value of a single rabbit. In effect, this is the
@@ -65,7 +65,7 @@ public class Bear extends Animal
      * @param field The field currently occupied.
      * @param newFoxes A list to return newly born foxes.
      */
-    public void act(List<Animal> newBears)
+    public void act(List<Actor> newBears)
     {
         incrementAge();
         incrementHunger();
@@ -148,7 +148,7 @@ public class Bear extends Animal
      * New births will be made into free adjacent locations.
      * @param newBears A list to return newly born foxes.
      */
-    private void giveBirth(List<Animal> newBears)
+    private void giveBirth(List<Actor> newBears)
     {
         // New bears are born into adjacent locations.
         // Get a list of adjacent free locations.
