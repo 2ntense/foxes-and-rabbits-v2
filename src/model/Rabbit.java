@@ -1,38 +1,29 @@
 package model;
 
-import model.*;
-import logic.Randomizer;
-
 import java.util.List;
-import java.util.Random;
+
+import view.Field;
+
+import logic.Location;
 
 /**
  * A simple model of a rabbit.
  * Rabbits age, move, breed, and die.
- * 
- * @author David J. Barnes and Michael Kölling
- * @version 2011.07.31
  */
 public class Rabbit extends Animal
 {
     // Characteristics shared by all rabbits (class variables).
 
     // The age at which a rabbit can start to breed.
-    private static final int BREEDING_AGE = 5;
+    private static int BREEDING_AGE = 5;
     // The age to which a rabbit can live.
-    private static final int MAX_AGE = 40;
+    private static int MAX_AGE = 40;
     // The likelihood of a rabbit breeding.
-    private static final double BREEDING_PROBABILITY = 0.04;
+    private static double BREEDING_PROBABILITY = 0.12;
     // The maximum number of births.
-    private static final int MAX_LITTER_SIZE = 4;
-    // A shared random number generator to control breeding.
-    private static final Random rand = Randomizer.getRandom();
+    private static int MAX_LITTER_SIZE = 4;
     
-    // Individual characteristics (instance fields).
     
-    // The rabbit's age.
-    private int age;
-
     /**
      * Create a new rabbit. A rabbit may be created with age
      * zero (a new born) or with a random age.
@@ -44,9 +35,9 @@ public class Rabbit extends Animal
     public Rabbit(boolean randomAge, Field field, Location location)
     {
         super(field, location);
-        age = 0;
+        setAge(0);
         if(randomAge) {
-            age = rand.nextInt(MAX_AGE);
+        	setAge(getRandom().nextInt(MAX_AGE));
         }
     }
     
@@ -55,7 +46,7 @@ public class Rabbit extends Animal
      * around. Sometimes it will breed or die of old age.
      * @param newRabbits A list to return newly born rabbits.
      */
-    public void act(List<Animal> newRabbits)
+    public void act(List<Actor> newRabbits)
     {
         incrementAge();
         if(isAlive()) {
@@ -71,17 +62,14 @@ public class Rabbit extends Animal
             }
         }
     }
-
+    
     /**
-     * Increase the age.
-     * This could result in the rabbit's death.
+     * returns the maximum age of a rabbit can live
+     * @return int maximum age of a rabbit can live
      */
-    private void incrementAge()
+    protected int getMaxAge()
     {
-        age++;
-        if(age > MAX_AGE) {
-            setDead();
-        }
+    	return MAX_AGE;
     }
     
     /**
@@ -89,7 +77,7 @@ public class Rabbit extends Animal
      * New births will be made into free adjacent locations.
      * @param newRabbits A list to return newly born rabbits.
      */
-    private void giveBirth(List<Animal> newRabbits)
+    private void giveBirth(List<Actor> newRabbits)
     {
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
@@ -102,27 +90,39 @@ public class Rabbit extends Animal
             newRabbits.add(young);
         }
     }
-        
-    /**
-     * Generate a number representing the number of births,
-     * if it can breed.
-     * @return The number of births (may be zero).
-     */
-    private int breed()
-    {
-        int births = 0;
-        if(canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY) {
-            births = rand.nextInt(MAX_LITTER_SIZE) + 1;
-        }
-        return births;
-    }
 
     /**
      * A rabbit can breed if it has reached the breeding age.
      * @return true if the rabbit can breed, false otherwise.
      */
-    private boolean canBreed()
+    protected boolean canBreed()
     {
-        return age >= BREEDING_AGE;
+        return getAge() >= getBreedingAge();
+    }
+    
+    /**
+     * Getter om BREEDING_AGE op te halen
+     */
+    protected int getBreedingAge()
+    {
+    	return BREEDING_AGE;
+    }
+    
+    /**
+     * Getter om MAX_LITTER_SIZE op te halen
+     * @return MAX_LITTER_SIZE maximum litter
+     */
+    protected int getMaxLitterSize()
+    {
+    	return MAX_LITTER_SIZE;
+    }
+    
+    /**
+     * Getter om BREEDING_PROBABILITY op te halen
+     * @return BREEDING_PROBABILITY breeding kansen
+     */
+    protected double getBreedingProbability()
+    {
+    	return BREEDING_PROBABILITY;
     }
 }

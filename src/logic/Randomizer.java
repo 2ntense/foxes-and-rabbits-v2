@@ -1,12 +1,8 @@
 package logic;
-
 import java.util.Random;
 
 /**
  * Provide control over the randomization of the simulation.
- * 
- * @author David J. Barnes and Michael Kölling
- * @version 2011.07.31
  */
 public class Randomizer
 {
@@ -15,13 +11,14 @@ public class Randomizer
     // A shared Random object, if required.
     private static final Random rand = new Random(SEED);
     // Determine whether a shared random generator is to be provided.
-    private static final boolean useShared = true;
+    private static final boolean useShared = false;		// tijdelijk op random gezet
 
     /**
      * Constructor for objects of class Randomizer
      */
     public Randomizer()
     {
+    	
     }
 
     /**
@@ -31,7 +28,7 @@ public class Randomizer
     public static Random getRandom()
     {
         if(useShared) {
-            return rand;
+        	return rand;
         }
         else {
             return new Random();
