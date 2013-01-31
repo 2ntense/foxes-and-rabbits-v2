@@ -27,10 +27,10 @@ public class Hunter implements Actor
      * @param field The field currently occupied.
      * @param location The location within the field.
      */
-    public Hunter(Field field, Location location)
+    public Hunter(Field field, Location newLocation)
     {
         this.field = field;
-        this.location = location;
+        setLocation(newLocation);
     }
 
     /**

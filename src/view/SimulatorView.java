@@ -13,6 +13,17 @@ import runner.ThreadRunner;
 
 import logic.Counter;
 import main.Main;
+import model.Rabbit;
+
+import logic.Counter;
+import view.Field;
+import view.FieldStats;
+import main.Main;
+import controller.Simulator;
+import model.Bear;
+import model.Fox;
+import model.Rabbit;
+import view.Sound;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -45,6 +56,8 @@ public class SimulatorView extends JFrame {
 	private PieChart pieChart;
 	private Histogram histogram;
 	private HistoryView historyView;
+	
+	private Rabbit rabbit;
 	
 	private ThreadRunner threadRunner;
 	
@@ -144,8 +157,14 @@ public class SimulatorView extends JFrame {
 		// step 1 knop
 		JButton step1 = new JButton("Step 1");
 		step1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {						
 				threadRunner.startRun(1);
+				try {
+					Sound buttonPress = new Sound("sounds/button.wav");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		toolbar.add(step1); // toevoegen aan toolbar panel
@@ -155,6 +174,12 @@ public class SimulatorView extends JFrame {
 		step100.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				threadRunner.startRun(100);
+				try {
+					Sound buttonPress = new Sound("sounds/button.wav");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		toolbar.add(step100);
@@ -164,6 +189,12 @@ public class SimulatorView extends JFrame {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				threadRunner.startRun(0);
+				try {
+					Sound buttonPress = new Sound("sounds/button.wav");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		toolbar.add(start); // toevoegen aan toolbar panel
@@ -173,6 +204,12 @@ public class SimulatorView extends JFrame {
 		stop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				threadRunner.stop();
+				try {
+					Sound buttonPress = new Sound("sounds/button.wav");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		toolbar.add(stop); // toevoegen aan toolbar panel
@@ -183,6 +220,12 @@ public class SimulatorView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				historyView.setStep(0);
 				Main.getSimulator().reset();
+				try {
+					Sound buttonPress = new Sound("sounds/button.wav");
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		toolbar.add(reset); // toevoegen aan toolbar panel
@@ -239,15 +282,7 @@ public class SimulatorView extends JFrame {
 				quit();
 			}
 		});
-		menu.add(item); // toevoegen aan de menu
-
-		
-		
-		
-		
-		
-		
-		
+		menu.add(item); // toevoegen aan de menu								
 		
 		// maak help menu aan
 		menu = new JMenu("Help");
@@ -269,16 +304,17 @@ public class SimulatorView extends JFrame {
 				makeAbout();
 			}
 		});
-		menu.add(item); // toevoegen aan de menu
-		
-		
-		
+		menu.add(item); // toevoegen aan de menu						
 	}
 
 	
 	private void makeHelp() {
-		JFrame helpFrame = new JFrame();
-		
+		JFrame helpFrame = new JFrame("Help");
+		JPanel helpPanel = new JPanel();
+		JTextArea helpTextArea = new JTextArea("TEST", 12, 20);
+		helpFrame.add(helpPanel);
+		helpPanel.add(helpTextArea);
+		helpTextArea.setEditable(false);
 		helpFrame.setSize(new Dimension(350, 240));
 		helpFrame.setVisible(true);
 		helpFrame.setResizable(false);
@@ -286,14 +322,18 @@ public class SimulatorView extends JFrame {
 
 	}
 	
-	private void makeAbout() {
-		JFrame aboutFrame = new JFrame();
-		
-		aboutFrame.setSize(new Dimension(350, 240));
-		aboutFrame.setVisible(true);
-		aboutFrame.setResizable(false);
-		aboutFrame.setLocationRelativeTo(null);		
-	}
+	private void makeAbout() {		
+		  JFrame aboutFrame = new JFrame("About");
+		  JPanel aboutPanel = new JPanel();
+		  JTextArea aboutTextArea = new JTextArea("               Vossen en Konijnen 2013 \n \n \n \n \n \n \n \n \n \n \n Mike Por, Alexander Postma en Stefan Yip", 12, 20);
+		  aboutFrame.add(aboutPanel);
+		  aboutPanel.add(aboutTextArea);
+		  aboutTextArea.setEditable(false);
+		  aboutFrame.setSize(350, 240);
+		  aboutFrame.setVisible(true);
+		  aboutFrame.setResizable(false);
+		  aboutFrame.setLocationRelativeTo(null);
+	}		
 	
 	
 	/**
@@ -304,84 +344,209 @@ public class SimulatorView extends JFrame {
 	private void makeSettings() {
 		// maak settings frame aan
 		JFrame settingsFrame = new JFrame();
-
+		settingsFrame.setTitle("Settings");
+		
 		// maak settings frame's main tab aan, size, layout en border van
 		// settings panel
 		JTabbedPane mainTab = new JTabbedPane();
 		mainTab.setBorder(new EmptyBorder(10, 10, 10, 10));
 		mainTab.setPreferredSize(new Dimension(100, 100));
 
+		
+		/*
+		 * GENERAL TAB
+		 */
 		// maak general tab aan, layout en border
 		JPanel generalTab = new JPanel();
 		generalTab.setLayout(new GridLayout(8, 0));
 		generalTab.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// voeg labels, tekstvelden en Actionlistener toe aan general tab
-		generalTab.add(new JLabel("Animation Speed"));
-		final JTextField animationSpeed = new JTextField();
-		generalTab.add(animationSpeed);
+		generalTab.add(new JLabel("TEST"));
+		final JTextField test = new JTextField();
+		generalTab.add(test);
 		
 		// change setting button
 		JButton change = new JButton("Apply");
 		change.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Simulator.setAnimationSpeed(stringToInt(animationSpeed));
+				//Simulator.setAnimationSpeed(stringToInt(animationSpeed));
 			}
 		});		
 		generalTab.add(change);
 
+		/*
+		 *	RABBITS TAB
+		 */
 		// maak rabbits tab aan, layout en border
 		JPanel rabbitTab = new JPanel();
 		rabbitTab.setLayout(new GridLayout(8, 0));
 		rabbitTab.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// voeg labels, tekstvelden en ActionListener toe aan rabbit tab
-		rabbitTab.add(new JLabel("Breeding age"));
-		JTextField breedingAge = new JTextField();
-		breedingAge.addActionListener(new ActionListener() {
+		rabbitTab.add(new JLabel("Breeding Age:"));
+		final JTextField rabbitBreedingAge = new JTextField("5");
+		rabbitTab.add(rabbitBreedingAge);
+
+		rabbitTab.add(new JLabel("Max Age:"));
+		final JTextField rabbitMaxAge = new JTextField("40");
+		rabbitTab.add(rabbitMaxAge);
+
+		rabbitTab.add(new JLabel("Breeding Probability:"));
+		final JTextField rabbitBreedingProbability = new JTextField("0.12");
+		rabbitTab.add(rabbitBreedingProbability);
+
+		rabbitTab.add(new JLabel("Max Litter Size:"));
+		final JTextField rabbitMaxLitterSize = new JTextField("4");
+		rabbitTab.add(rabbitMaxLitterSize);
+
+		// apply rabbits changes button
+		JButton rabbitApply = new JButton("Apply");
+		rabbitApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				// get text van de text fields
+				String stringBREEDING_AGE = rabbitBreedingAge.getText();
+				String stringMAX_AGE = rabbitMaxAge.getText();
+				String stringBREEDING_PROBABILITY = rabbitBreedingProbability.getText();
+				String stringMAX_LITTER_SIZE = rabbitMaxLitterSize.getText();
+								
+				// converteer de strings naar ints en double
+				int intBREEDING_AGE = Integer.parseInt(stringBREEDING_AGE);
+				int intMAX_AGE = Integer.parseInt(stringMAX_AGE);
+				double doubleBREEDING_PROBABILITY = Double.parseDouble(stringBREEDING_PROBABILITY);
+				int intMAX_LITTER_SIZE = Integer.parseInt(stringMAX_LITTER_SIZE);
+				
+				// set de nieuwe waardes
+				Rabbit.setBreedingAge(intBREEDING_AGE);
+				Rabbit.setMaxAge(intMAX_AGE);
+				Rabbit.setBreedingProbability(doubleBREEDING_PROBABILITY);
+				Rabbit.setMaxLitterSize(intMAX_LITTER_SIZE);		
+				
+				System.out.println("Applied!");
+				
 			}
-		});
-		rabbitTab.add(breedingAge);
-
-		rabbitTab.add(new JLabel("Max age"));
-		JTextField maxAge = new JTextField();
-		maxAge.addActionListener(new ActionListener() {
+		});		
+		rabbitTab.add(rabbitApply);
+		
+		
+		
+		
+		/*
+		 * FOXES TAB
+		 */
+		// maak rabbits tab aan, layout en border
+		JPanel  foxTab = new JPanel();
+		foxTab.setLayout(new GridLayout(8, 0));
+		foxTab.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		foxTab.add(new JLabel("Breeding Age:"));
+		final JTextField foxBreedingAge = new JTextField("15");
+		foxTab.add(foxBreedingAge);
+		
+		foxTab.add(new JLabel("Max Age:"));
+		final JTextField foxMaxAge = new JTextField("150");
+		foxTab.add(foxMaxAge);
+		
+		foxTab.add(new JLabel("Breeding Probability:"));
+		final JTextField foxBreedingProbability = new JTextField("0.08");
+		foxTab.add(foxBreedingProbability);
+		
+		foxTab.add(new JLabel("Max Litter Size:"));
+		final JTextField foxMaxLitterSize = new JTextField("4");
+		foxTab.add(foxMaxLitterSize);
+		
+		JButton foxApply = new JButton("Apply");
+		foxApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				// get text van de text fields
+				String stringBREEDING_AGE = foxBreedingAge.getText();
+				String stringMAX_AGE = foxMaxAge.getText();
+				String stringBREEDING_PROBABILITY = foxBreedingProbability.getText();
+				String stringMAX_LITTER_SIZE = foxMaxLitterSize.getText();
+								
+				// converteer de strings naar ints en double
+				int intBREEDING_AGE = Integer.parseInt(stringBREEDING_AGE);
+				int intMAX_AGE = Integer.parseInt(stringMAX_AGE);
+				double doubleBREEDING_PROBABILITY = Double.parseDouble(stringBREEDING_PROBABILITY);
+				int intMAX_LITTER_SIZE = Integer.parseInt(stringMAX_LITTER_SIZE);
+				
+				// set de nieuwe waardes
+				Fox.setBreedingAge(intBREEDING_AGE);
+				Fox.setMaxAge(intMAX_AGE);
+				Fox.setBreedingProbability(doubleBREEDING_PROBABILITY);
+				Fox.setMaxLitterSize(intMAX_LITTER_SIZE);
+				
+				System.out.println("Applied!");
+				
 			}
-		});
-		rabbitTab.add(maxAge);
-
-		rabbitTab.add(new JLabel("Breeding probability"));
-		JTextField breedingProbability = new JTextField();
-		breedingProbability.addActionListener(new ActionListener() {
+		});		
+		foxTab.add(foxApply);
+		
+		/*
+		 * BEAR TAB
+		 */
+		// maak bear tab aan, layout en border
+		JPanel  bearTab = new JPanel();
+		bearTab.setLayout(new GridLayout(8, 0));
+		bearTab.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		bearTab.add(new JLabel("Breeding Age:"));
+		final JTextField bearBreedingAge = new JTextField("30");
+		bearTab.add(bearBreedingAge);
+		
+		bearTab.add(new JLabel("Max Age:"));
+		final JTextField bearMaxAge = new JTextField("190");
+		bearTab.add(bearMaxAge);
+		
+		bearTab.add(new JLabel("Breeding Probability:"));
+		final JTextField bearBreedingProbability = new JTextField("0.02");
+		bearTab.add(bearBreedingProbability);
+		
+		bearTab.add(new JLabel("Max Litter Size:"));
+		final JTextField bearMaxLitterSize = new JTextField("1");
+		bearTab.add(bearMaxLitterSize);
+		
+		JButton bearApply = new JButton("Apply");
+		bearApply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				// get text van de text fields
+				String stringBREEDING_AGE = bearBreedingAge.getText();
+				String stringMAX_AGE = bearMaxAge.getText();
+				String stringBREEDING_PROBABILITY = bearBreedingProbability.getText();
+				String stringMAX_LITTER_SIZE = bearMaxLitterSize.getText();
+								
+				// converteer de strings naar ints en double
+				int intBREEDING_AGE = Integer.parseInt(stringBREEDING_AGE);
+				int intMAX_AGE = Integer.parseInt(stringMAX_AGE);
+				double doubleBREEDING_PROBABILITY = Double.parseDouble(stringBREEDING_PROBABILITY);
+				int intMAX_LITTER_SIZE = Integer.parseInt(stringMAX_LITTER_SIZE);
+				
+				// set de nieuwe waardes
+				Bear.setBreedingAge(intBREEDING_AGE);
+				Bear.setMaxAge(intMAX_AGE);
+				Bear.setBreedingProbability(doubleBREEDING_PROBABILITY);
+				Bear.setMaxLitterSize(intMAX_LITTER_SIZE);
+				
+				System.out.println("Applied!");
+				
 			}
-		});
-		rabbitTab.add(breedingProbability);
-
-		rabbitTab.add(new JLabel("Max litter size"));
-		JTextField maxLitterSize = new JTextField();
-		maxLitterSize.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		rabbitTab.add(maxLitterSize);
-
+		});		
+		bearTab.add(bearApply);							
+		
 		// alle tabs toevoegen aan maintab
 		// main tab toevoegen aan de settings frame
 		mainTab.addTab("General", generalTab);
 		mainTab.addTab("Rabbit", rabbitTab);
+		mainTab.addTab("Fox", foxTab);
+		mainTab.addTab("Bear", bearTab);
 		settingsFrame.add(mainTab);
 
 		//pack();
 
-		settingsFrame.setSize(new Dimension(350, 240));
-
+		settingsFrame.setSize(new Dimension(320, 250));
 		settingsFrame.setResizable(false);
 		settingsFrame.setLocationRelativeTo(null);
 		settingsFrame.setVisible(true);

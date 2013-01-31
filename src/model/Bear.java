@@ -191,4 +191,24 @@ public class Bear extends Animal
     {
     	return BREEDING_PROBABILITY;
     }
+    
+    public static void setBreedingAge(int newBREEDING_AGE)
+    {
+    	BREEDING_AGE = newBREEDING_AGE;
+    }
+    
+    public static void setMaxAge(int newMAX_AGE)
+    {
+    	MAX_AGE = newMAX_AGE;
+    }
+    
+    public static void setBreedingProbability(double newBREEDING_PROBABILITY)
+    {
+    	BREEDING_PROBABILITY = newBREEDING_PROBABILITY;
+    }
+    
+    public static void setMaxLitterSize(int newMAX_LITTER_SIZE)
+    {
+    	MAX_LITTER_SIZE = newMAX_LITTER_SIZE;
+    }
 }

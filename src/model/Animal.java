@@ -73,6 +73,7 @@ public abstract class Animal implements Actor
     /**
      * Increase the age. This could result in the animal's death.
      */
+    
     protected void incrementAge()
     {
         setAge(getAge() + 1);
@@ -80,6 +81,7 @@ public abstract class Animal implements Actor
             setDead();
         }
     }
+    
     
     /**
      * returns the maximum age of an animal type can live
@@ -123,6 +125,7 @@ public abstract class Animal implements Actor
      * if it can breed.
      * @return The number of births (may be zero).
      */
+    
     protected int breed()
     {
         int births = 0;
@@ -131,6 +134,7 @@ public abstract class Animal implements Actor
         }
         return births;
     }
+    
     
     /**
      * An animal can breed if it has reached the breeding age.
