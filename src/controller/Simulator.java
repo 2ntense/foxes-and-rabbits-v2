@@ -15,7 +15,9 @@ import model.Actor;
 import model.Animal;
 import model.Bear;
 import model.Fox;
+import model.Grass;
 import model.Hunter;
+import model.Plant;
 import model.Rabbit;
 
 /**
@@ -30,16 +32,16 @@ public class Simulator
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 80;
     // The probability that a bear will be created in any given grid position.    
-    private static final double BEAR_CREATION_PROBABILITY = 0.01;
+    private static double BEAR_CREATION_PROBABILITY = 0.01;
     // The probability that a fox will be created in any given grid position.
-    private static final double FOX_CREATION_PROBABILITY = 0.02;
+    private static double FOX_CREATION_PROBABILITY = 0.02;
     // The probability that a rabbit will be created in any given grid position.
-    private static final double RABBIT_CREATION_PROBABILITY = 0.08;    
+    private static double RABBIT_CREATION_PROBABILITY = 0.08;    
     // The probability that a hunter will be created in any given grid position.
-    private static final double HUNTER_CREATION_PROBABILITY = 0.002;
+    private static double HUNTER_CREATION_PROBABILITY = 0.002;
+    // The probability that grass will be created in any given grid position.
+    private static double GRASS_CREATION_PROBABILITY = 1;
     
-    //	animation speed of the thread
-    private static int animationSpeed = 0;//100;
     // List of Actors in the field.
     private List<Actor> actors;
     // The current state of the field.
@@ -81,6 +83,7 @@ public class Simulator
         view.setColor(Fox.class, Color.BLUE);
         view.setColor(Bear.class, Color.MAGENTA);
         view.setColor(Hunter.class, Color.BLACK);
+        view.setColor(Grass.class, Color.GREEN);
         // Setup a valid starting point.
         reset();
     }
@@ -105,6 +108,13 @@ public class Simulator
 				        {
 				        	Animal animal = (Animal) actor;
 				        	if(! animal.isAlive()) {
+				                it.remove();
+				            }
+				        }
+				        else if (actor instanceof Plant)
+				        {
+				        	Plant plant = (Plant) actor;
+				        	if(! plant.isAlive()) {
 				                it.remove();
 				            }
 				        }
@@ -157,14 +167,6 @@ public class Simulator
     	return step;
     }
     
-    /**
-     * setter voor animationSpeed
-     * @param animationSpeed2
-     */
-    public static void setAnimationSpeed(int animationSpeed)
-    {
-    	Simulator.animationSpeed = animationSpeed;
-    }
     
     /**
      * Randomly populate the field with foxes and rabbits.
@@ -195,8 +197,63 @@ public class Simulator
                     Hunter hunter = new Hunter(field, location);
                     actors.add(hunter);
                 }
+                else if(rand.nextDouble() <= GRASS_CREATION_PROBABILITY) {
+                    Location location = new Location(row, col);
+                    Grass grass = new Grass(true, field, location);
+                    actors.add(grass);
+                }
                 // else leave the location empty.
             }
         }
     }
+    
+    /**
+     * setter voor BEAR_CREATION_PROBABILITY
+     * @param BEAR_CREATION_PROBABILITY
+     */
+    public static void setBearCreationProbability(double BEAR_CREATION_PROBABILITY)
+    {
+    	if (BEAR_CREATION_PROBABILITY >= 0)
+    		Simulator.BEAR_CREATION_PROBABILITY = BEAR_CREATION_PROBABILITY;
+    }
+    
+    /**
+     * setter voor FOX_CREATION_PROBABILITY
+     * @param FOX_CREATION_PROBABILITY
+     */
+    public static void setFoxCreationProbability(double FOX_CREATION_PROBABILITY)
+    {
+    	if (FOX_CREATION_PROBABILITY >= 0)
+    		Simulator.FOX_CREATION_PROBABILITY = FOX_CREATION_PROBABILITY;
+    }
+    
+    /**
+     * setter voor RABBIT_CREATION_PROBABILITY
+     * @param RABBIT_CREATION_PROBABILITY
+     */
+    public static void setRabbitCreationProbability(double RABBIT_CREATION_PROBABILITY)
+    {
+    	if (RABBIT_CREATION_PROBABILITY >= 0)
+    		Simulator.RABBIT_CREATION_PROBABILITY = RABBIT_CREATION_PROBABILITY;
+    }
+    
+    /**
+     * setter voor HUNTER_CREATION_PROBABILITY
+     * @param HUNTER_CREATION_PROBABILITY
+     */
+    public static void setHunterCreationProbability(double HUNTER_CREATION_PROBABILITY)
+    {
+    	if (HUNTER_CREATION_PROBABILITY >= 0)
+    		Simulator.HUNTER_CREATION_PROBABILITY = HUNTER_CREATION_PROBABILITY;
+    }
+    
+    /**
+     * setter voor GRASS_CREATION_PROBABILITY
+     * @param GRASS_CREATION_PROBABILITY
+     */
+    public static void setGrassCreationProbability(double GRASS_CREATION_PROBABILITY)
+    {
+    	if (GRASS_CREATION_PROBABILITY >= 0)
+    		Simulator.GRASS_CREATION_PROBABILITY = GRASS_CREATION_PROBABILITY;
+    }    
 }

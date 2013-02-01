@@ -9,7 +9,6 @@ import logic.Counter;
 
 /**
  * The Class represent the population of actors in a piechart
- * 
  */
 public class PieChart extends JPanel
 {

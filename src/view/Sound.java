@@ -4,7 +4,9 @@ import java.io.*;
 
 import sun.audio.*;
 
-
+/**
+ * A sound player*
+ */
 public class Sound
 {
   public Sound(String path) throws Exception {

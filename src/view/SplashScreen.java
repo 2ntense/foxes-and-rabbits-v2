@@ -3,6 +3,9 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * Shows a splashscreen
+ */
 public class SplashScreen extends JWindow {
     
     private int duration;
@@ -47,13 +50,6 @@ public class SplashScreen extends JWindow {
         try { Thread.sleep(duration); } catch (Exception e) {}
         
         setVisible(false);
-        
-    }
-    
-    public void showSplashAndExit() {
-        
-        showSplash();
-        System.exit(0);
         
     }
 }

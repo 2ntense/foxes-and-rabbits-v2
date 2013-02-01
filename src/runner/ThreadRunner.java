@@ -30,8 +30,7 @@ public class ThreadRunner implements Runnable
     	}
     	else
     	{
-//    		this.numSteps = numSteps;	//	voor niet stack gevallen
-    		this.numSteps += numSteps;	//	voor als het wel moet stacken
+    		this.numSteps += numSteps;
     	}
     	
     	try{

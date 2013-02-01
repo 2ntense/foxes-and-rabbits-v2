@@ -11,6 +11,9 @@ import controller.Simulator;
 import logic.Counter;
 import main.Main;
 
+/**
+ * Represents a log with the amounts of animals on each step
+ */
 public class HistoryView extends JPanel
 {
 	//	text area

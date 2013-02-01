@@ -22,6 +22,7 @@ import main.Main;
 import controller.Simulator;
 import model.Bear;
 import model.Fox;
+import model.Grass;
 import model.Rabbit;
 import view.Sound;
 
@@ -67,7 +68,7 @@ public class SimulatorView extends JFrame {
 	// A statistics object computing and storing simulation information
 	private FieldStats stats;
 	private boolean isReset;
-	private static final String VERSION = "versie 0.5";
+	private static final String VERSION = "versie 1.0";
 	private int viewsToDisplay = 5;
 
 	/**
@@ -311,7 +312,7 @@ public class SimulatorView extends JFrame {
 	private void makeHelp() {
 		JFrame helpFrame = new JFrame("Help");
 		JPanel helpPanel = new JPanel();
-		JTextArea helpTextArea = new JTextArea("TEST", 12, 20);
+		JTextArea helpTextArea = new JTextArea("[Step 1] voor één stap \n [Step 100] voor honderd stappen. \n [Start] voor non-stop simuleren. \n [Stop] om het te stoppen. \n [Reset] om de simulatie te resetten. \n \n U kunt verschillende opties veranderen in de settings venster.", 12, 20);
 		helpFrame.add(helpPanel);
 		helpPanel.add(helpTextArea);
 		helpTextArea.setEditable(false);
@@ -362,15 +363,49 @@ public class SimulatorView extends JFrame {
 		generalTab.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		// voeg labels, tekstvelden en Actionlistener toe aan general tab
-		generalTab.add(new JLabel("TEST"));
-		final JTextField test = new JTextField();
-		generalTab.add(test);
+		generalTab.add(new JLabel("Rabbit Creation Probability:"));
+		final JTextField rcp = new JTextField("0.08");
+		generalTab.add(rcp);
+		
+		generalTab.add(new JLabel("Fox Creation Probability:"));
+		final JTextField fcp = new JTextField("0.02");
+		generalTab.add(fcp);
+		
+		generalTab.add(new JLabel("Bear Creation Probability:"));
+		final JTextField bcp = new JTextField("0.01");
+		generalTab.add(bcp);
+		
+		generalTab.add(new JLabel("Hunter Creation Probability:"));
+		final JTextField hcp = new JTextField("0.002");
+		generalTab.add(hcp);
+		
+		generalTab.add(new JLabel("Grass Creation Probability:"));
+		final JTextField gcp = new JTextField("1");
+		generalTab.add(gcp);
 		
 		// change setting button
 		JButton change = new JButton("Apply");
 		change.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Simulator.setAnimationSpeed(stringToInt(animationSpeed));
+				String stringRCP = rcp.getText();
+				String stringFCP = fcp.getText();
+				String stringBCP = bcp.getText();
+				String stringHCP = hcp.getText();
+				String stringGCP = gcp.getText();
+				
+				double doubleRCP= Double.parseDouble(stringRCP);
+				double doubleFCP= Double.parseDouble(stringFCP);
+				double doubleBCP= Double.parseDouble(stringBCP);
+				double doubleHCP= Double.parseDouble(stringHCP);
+				double doubleGCP= Double.parseDouble(stringGCP);
+				
+				Simulator.setRabbitCreationProbability(doubleRCP);
+				Simulator.setFoxCreationProbability(doubleFCP);
+				Simulator.setBearCreationProbability(doubleBCP);
+				Simulator.setHunterCreationProbability(doubleHCP);		
+				Simulator.setGrassCreationProbability(doubleGCP);
+				
+				System.out.println("Applied!");
 			}
 		});		
 		generalTab.add(change);
@@ -534,7 +569,64 @@ public class SimulatorView extends JFrame {
 				
 			}
 		});		
-		bearTab.add(bearApply);							
+		bearTab.add(bearApply);			
+		
+		
+		
+		/*
+		 * GRASS TAB
+		 */
+		// maak grass tab aan, layout en border
+		JPanel  grassTab = new JPanel();
+		grassTab.setLayout(new GridLayout(8, 0));
+		grassTab.setBorder(new EmptyBorder(10, 10, 10, 10));
+		
+		grassTab.add(new JLabel("Breeding Age:"));
+		final JTextField grassBreedingAge = new JTextField("3");
+		grassTab.add(grassBreedingAge);
+		
+		grassTab.add(new JLabel("Max Age:"));
+		final JTextField grassMaxAge = new JTextField("12");
+		grassTab.add(grassMaxAge);
+		
+		grassTab.add(new JLabel("Breeding Probability:"));
+		final JTextField grassBreedingProbability = new JTextField("0.5");
+		grassTab.add(grassBreedingProbability);
+		
+		grassTab.add(new JLabel("Max Litter Size:"));
+		final JTextField grassMaxLitterSize = new JTextField("6");
+		grassTab.add(grassMaxLitterSize);
+		
+		JButton grassApply = new JButton("Apply");
+		grassApply.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// get text van de text fields
+				String stringBREEDING_AGE = grassBreedingAge.getText();
+				String stringMAX_AGE = grassMaxAge.getText();
+				String stringBREEDING_PROBABILITY = grassBreedingProbability.getText();
+				String stringMAX_LITTER_SIZE = grassMaxLitterSize.getText();
+								
+				// converteer de strings naar ints en double
+				int intBREEDING_AGE = Integer.parseInt(stringBREEDING_AGE);
+				int intMAX_AGE = Integer.parseInt(stringMAX_AGE);
+				double doubleBREEDING_PROBABILITY = Double.parseDouble(stringBREEDING_PROBABILITY);
+				int intMAX_LITTER_SIZE = Integer.parseInt(stringMAX_LITTER_SIZE);
+				
+				// set de nieuwe waardes
+				Grass.setBreedingAge(intBREEDING_AGE);
+				Grass.setMaxAge(intMAX_AGE);
+				Grass.setBreedingProbability(doubleBREEDING_PROBABILITY);
+				Grass.setMaxLitterSize(intMAX_LITTER_SIZE);
+				
+				System.out.println("Applied!");
+				
+			}
+		});		
+		grassTab.add(grassApply);					
+		
+		
+		
 		
 		// alle tabs toevoegen aan maintab
 		// main tab toevoegen aan de settings frame
@@ -542,6 +634,7 @@ public class SimulatorView extends JFrame {
 		mainTab.addTab("Rabbit", rabbitTab);
 		mainTab.addTab("Fox", foxTab);
 		mainTab.addTab("Bear", bearTab);
+		mainTab.addTab("Grass", grassTab);
 		settingsFrame.add(mainTab);
 
 		//pack();
@@ -613,38 +706,6 @@ public class SimulatorView extends JFrame {
 	 */
 	public FieldStats getStats() {
 		return stats;
-	}
-
-	/**
-	 * convert a string to int
-	 * 
-	 * @param number
-	 */
-	private int stringToInt(JTextField text) {
-		int number = 0;
-		try {
-			number = Integer.parseInt(text.getText());
-		} catch (NumberFormatException e) {
-			historyView.getTextArea().append(
-					"Alleen hele getallen zijn toegestaan" + "\r\n");
-		}
-		return number;
-	}
-
-	/**
-	 * convert a string to double
-	 * 
-	 * @param number
-	 */
-	private double stringToDouble(String text) {
-		double number = 0;
-		try {
-			number = Double.parseDouble(text);
-		} catch (NumberFormatException e) {
-			historyView.getTextArea().append(
-					"Alleen cijfers zijn toegestaan" + "\r\n");
-		}
-		return number;
 	}
 
 	/**
@@ -750,15 +811,6 @@ public class SimulatorView extends JFrame {
 	public boolean getIsReset() {
 		return isReset;
 	}
-
-	// /**
-	// * getter voor textarea
-	// * @return textarea
-	// */
-	// public JTextArea getTextArea()
-	// {
-	// return history;
-	// }
 
 	/**
 	 * Provide a graphical view of a rectangular field. This is a nested class

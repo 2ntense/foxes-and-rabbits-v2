@@ -1,5 +1,6 @@
 package	 model;
 
+import java.util.Iterator;
 import java.util.List;
 
 import view.Field;
@@ -22,8 +23,8 @@ public class Rabbit extends Animal
     private static double BREEDING_PROBABILITY = 0.12;
     // The maximum number of births.
     private static int MAX_LITTER_SIZE = 4;
-    
-    private static String test = "TEST"; 
+    // food value from grass
+    private static final int GRASS_FOOD_VALUE = 6;
     
     /**
      * Create a new rabbit. A rabbit may be created with age
@@ -41,21 +42,7 @@ public class Rabbit extends Animal
         	setAge(getRandom().nextInt(MAX_AGE));
         }
     }
-    
-    
-    
-    public void setTest(String newTest) {
-    	test = newTest;
-    }
-    
-    public static String getTest() {
-    	return test;
-    }
-    
-    
-    
-    
-    
+      
     /**
      * This is what the rabbit does most of the time - it runs 
      * around. Sometimes it will breed or die of old age.
@@ -66,8 +53,13 @@ public class Rabbit extends Animal
         incrementAge();
         if(isAlive()) {
             giveBirth(newRabbits);            
-            // Try to move into a free location.
-            Location newLocation = getField().freeAdjacentLocation(getLocation());
+            // Move towards a source of food if found.
+            Location newLocation = findFood();
+            if(newLocation == null) { 
+                // No food found - try to move to a free location.
+                newLocation = getField().freeAdjacentLocation(getLocation());
+            }
+            // See if it was possible to move.
             if(newLocation != null) {
                 setLocation(newLocation);
             }
@@ -93,10 +85,35 @@ public class Rabbit extends Animal
         for(int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
             Rabbit young = new Rabbit(false, field, loc);
-            newRabbits.add(young);
+            newRabbits.add(young);					
         }
     }
 
+    /**
+     * Look for grass adjacent to the current location.
+     * Only the first live grass is eaten.
+     * @return Where food was found, or null if it wasn't.
+     */
+    private Location findFood()
+    {
+        Field field = getField();
+        List<Location> adjacent = field.adjacentLocations(getLocation());
+        Iterator<Location> it = adjacent.iterator();
+        while(it.hasNext()) {
+            Location where = it.next();
+            Object actor = field.getObjectAt(where);
+            if(actor instanceof Grass) {
+                Grass grass = (Grass) actor;
+                if(grass.isAlive()) { 
+                    grass.setDead();
+                    setFoodLevel(GRASS_FOOD_VALUE);
+                    return where;
+                }
+            }
+        }
+        return null;
+    }
+    
     /**
      * A rabbit can breed if it has reached the breeding age.
      * @return true if the rabbit can breed, false otherwise.
@@ -142,22 +159,37 @@ public class Rabbit extends Animal
     }
     
 
-    
+    /**
+     * sets a new breeding age
+     * @param newBREEDING_AGE
+     */
     public static void setBreedingAge(int newBREEDING_AGE)
     {
     	BREEDING_AGE = newBREEDING_AGE;
     }
     
+    /**
+     * sets a new max age
+     * @param newMAX_AGE
+     */
     public static void setMaxAge(int newMAX_AGE)
     {
     	MAX_AGE = newMAX_AGE;
     }
     
+    /**
+     * sets a new breeding probability
+     * @param newBREEDING_PROBABILITY
+     */
     public static void setBreedingProbability(double newBREEDING_PROBABILITY)
     {
     	BREEDING_PROBABILITY = newBREEDING_PROBABILITY;
     }
     
+    /**
+     * sets a new max litter size
+     * @param newMAX_LITTER_SIZE
+     */
     public static void setMaxLitterSize(int newMAX_LITTER_SIZE)
     {
     	MAX_LITTER_SIZE = newMAX_LITTER_SIZE;

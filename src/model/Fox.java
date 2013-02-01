@@ -179,21 +179,37 @@ public class Fox extends Animal
     	return BREEDING_PROBABILITY;
     }
     
+    /**
+     * setter for a new breeding age
+     * @param newBREEDING_AGE
+     */
     public static void setBreedingAge(int newBREEDING_AGE)
     {
     	BREEDING_AGE = newBREEDING_AGE;
     }
     
+    /**
+     * setter for a new max age
+     * @param newMAX_AGE
+     */
     public static void setMaxAge(int newMAX_AGE)
     {
     	MAX_AGE = newMAX_AGE;
     }
     
+    /**
+     * setter for a new breeding probability
+     * @param newBREEDING_PROBABILITY
+     */
     public static void setBreedingProbability(double newBREEDING_PROBABILITY)
     {
     	BREEDING_PROBABILITY = newBREEDING_PROBABILITY;
     }
     
+    /**
+     * setter for a new max litter size
+     * @param newMAX_LITTER_SIZE
+     */
     public static void setMaxLitterSize(int newMAX_LITTER_SIZE)
     {
     	MAX_LITTER_SIZE = newMAX_LITTER_SIZE;

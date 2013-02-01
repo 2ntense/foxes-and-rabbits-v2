@@ -91,13 +91,6 @@ public class Histogram extends JPanel
 			g.drawRect(width * blok + SPACE, this.height - height - SPACE, width - 1, height);
 			
 			blok++;
-		}
-		
-//		//	maak assen aan.
-//		//	teken de x as
-//		g.drawLine(SPACE, this.height - SPACE, this.width, this.height - SPACE);
-//		//	teken de y as
-//		g.drawLine(SPACE, 0, SPACE, this.height -SPACE);
-		
+		}	
 	}
 }

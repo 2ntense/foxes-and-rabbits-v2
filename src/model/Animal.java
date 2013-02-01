@@ -124,8 +124,7 @@ public abstract class Animal implements Actor
      * Generate a number representing the number of births,
      * if it can breed.
      * @return The number of births (may be zero).
-     */
-    
+     */    
     protected int breed()
     {
         int births = 0;
